@@ -14,3 +14,5 @@
 * [day03](/day03)
   * python03.md
   * app.py
+  * templates/daum_webtoon_list.html
+  * saramin_parser.py

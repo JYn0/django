@@ -1,6 +1,10 @@
 # python
 11.08
 
+> app.py
+> saramin_parser.py
+> templates/daum_webtoon_list.html
+
 * parameter
   ```python
   # 첫 준비

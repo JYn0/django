@@ -1,8 +1,9 @@
 # python
-
 11.07
 
-
+> app.py
+> dictionary.py
+> ws1107.py
 
 * 파이썬 딕셔너리(Dictionary)
   * 딕셔너리란(Hash, HashMap)

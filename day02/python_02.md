@@ -5,7 +5,6 @@
 
 
 * 파이썬 딕셔너리(Dictionary)
-
   * 딕셔너리란(Hash, HashMap)
 
     key값과 value값으로 한쌍의 묶음을 저장하는 것

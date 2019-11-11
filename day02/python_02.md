@@ -46,8 +46,8 @@
   app = Flask(__name__)
   if __name__ == '__main__':
       app.run(debug=True)
-  # $env:FLASK_ENV="Develpment"
-  # $env:FLASK_DEBUG="Develpment"
+  # $env:FLASK_ENV="development"
+  # $env:FLASk_DEBUG="True"
   @app.route('/')
   def index():
       return { 'method': 'Hello'}

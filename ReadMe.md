@@ -16,3 +16,17 @@
   * app.py
   * templates/daum_webtoon_list.html
   * saramin_parser.py
+
+* [day04](/day04)
+  * python04.md
+  * app.py
+    * templates/index.html
+    * templates/day_webtoon_list.html
+    * templates/naver.html
+    * templates/search.html
+    * templates/login.html
+    * templates/success.html
+  * myapp
+    * myapp
+    * webtoon
+

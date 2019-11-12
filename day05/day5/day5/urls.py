@@ -16,6 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+# 위치가 달라서 import 해줘야 함
+from lotto import views
+
+# app.route에 붙었던 것들 써주기
 urlpatterns = [
+    # path(어떤 주소로 받을지, 어떤 함수를 실행할지)
     path('admin/', admin.site.urls),
+    path('lotto/', views.lotto), 
+    path('lotto/winning/', views.winning)
 ]

@@ -17,12 +17,19 @@ from django.contrib import admin
 from django.urls import path
 
 # 위치가 달라서 import 해줘야 함
-from lotto import views
+# view 이름 겹치지 않게 as 사용할이름
+from lotto import views as lotto_views
+from ascii import views as ascii_views
+from opgg import views as opgg_views
 
 # app.route에 붙었던 것들 써주기
 urlpatterns = [
     # path(어떤 주소로 받을지, 어떤 함수를 실행할지)
     path('admin/', admin.site.urls),
-    path('lotto/', views.lotto), 
-    path('lotto/winning/', views.winning)
+    path('lotto/', lotto_views.lotto), 
+    path('lotto/winning/', lotto_views.winning),
+    path('ascii/', ascii_views.ascii),
+    path('ascii/result/', ascii_views.result),
+    path('opgg/', opgg_views.opgg),
+    path('opgg/result', opgg_views.result)
 ]

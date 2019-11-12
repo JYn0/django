@@ -30,3 +30,9 @@
     * myapp
     * webtoon
 
+* [day05](/day05)
+  * python05.md
+  * day5/
+    * lotto/
+    * ascii/
+    * opgg/

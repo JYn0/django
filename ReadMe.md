@@ -1,24 +1,24 @@
 # Contents
 
 * [day01](/day01)
-  * python01.md
+  * ReadMe.md
   * req.py
   * req2.py
 
 * [day02](/day02)
-  * python02.md
+  * ReadMe.md
   * dictionary.py
   * ws1107.py
   * app.py
 
 * [day03](/day03)
-  * python03.md
+  * ReadMe.md
   * app.py
   * templates/daum_webtoon_list.html
   * saramin_parser.py
 
 * [day04](/day04)
-  * python04.md
+  * ReadMe.md
   * app.py
     * templates/index.html
     * templates/day_webtoon_list.html
@@ -31,8 +31,13 @@
     * webtoon
 
 * [day05](/day05)
-  * python05.md
+  * ReadMe.md
   * day5/
     * lotto/
     * ascii/
     * opgg/
+  
+* [day06](/day06)
+  * ReadMe.md
+  * apitest/
+  * kakao_api/

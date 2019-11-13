@@ -1,5 +1,6 @@
 # python
 python01
+
 11.06
 
 >  req.py
@@ -19,11 +20,7 @@ og tag
 웹마스터도구
 
 
-
-
-
 window+r -> powershell
-
 
 
 webtoon.daum.net의 xhr 가져오기

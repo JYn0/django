@@ -4,6 +4,8 @@ python05
 
 > day5/
 > lotto/
+> ascii/
+> opgg/
 
 ### Django 시작하기
 * 프로젝트 만들기

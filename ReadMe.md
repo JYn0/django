@@ -41,3 +41,11 @@
   * ReadMe.md
   * apitest/
   * kakao_api/
+
+* [day07](/day07)
+  * ReadMe.md
+  * naverapi/
+    * naverapi/
+    * search_trend/ (app)
+    * boards
+  * class_test

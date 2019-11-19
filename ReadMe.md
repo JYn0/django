@@ -49,3 +49,17 @@
     * search_trend/ (app)
     * boards
   * class_test
+
+* [day08](/day08)
+  * ReadMe.md
+  * crudtest/
+    * boards/
+
+* [day09](/day09)
+  * ReadMe.md
+  * crudtest/
+    * articles/
+
+* [day10](/day10)
+  * ReadMe.md
+  * 

@@ -62,4 +62,5 @@
 
 * [day10](/day10)
   * ReadMe.md
-  * 
+  * crudtest/
+    * articles/

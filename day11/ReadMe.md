@@ -22,9 +22,21 @@ settings.py 작성
 urls.py 작성
 instagram/article/urls.py 만들고 작성
 views.py에 def 써주기
+models.py
 def에 필요한 templates 폴더 만들어서 html 작성
-
 ```
 
 > {% %} -> 파이썬 로직
 > {{ }} -> 실제 출력(내용, 태그 등)
+
+```python
+# index.html
+{% for comment in article.comment_set.all %}
+->
+{% for comment in article.comments %}
+# models.py
+def comments(self):
+    def comments(self):
+        # article_id가 self.id인 것을 return해라
+        return Comment.objects.filter(article_id=self.id)
+```

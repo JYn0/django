@@ -6,9 +6,6 @@
         <form action="{% url 'articles' %}" method="POST">
             <input type="hidden" name="csrfmiddlewaretoken" value={{csrf_token}}>
             <div class="card text-center">
-                <!-- <div class="card-header">
-                  Featured
-                </div> -->
                 <div class="card-body">
                     <textarea name="contents" class="form-control" rows="5"> </textarea>
                 </div>
@@ -27,16 +24,38 @@
             <img class="card-img-top" >
             <div class="card-body" style="min-height: 8rem;">
                 <p class="card-text">{{article.contents}}</p>
+                
+                <span class="float-right">
+                    <a href="{% url 'edit' article.id %}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'delete' article.id %}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                </span>
+            
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                        <i class="fas fa-comment-dots"></i>
-                    댓글 1
-                    <a class="btn btn-warning">수정</a>
-                    <a class="btn btn-danger">삭제</a>
+                    <form action="{% url 'comments' %}" method="POST">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+                        <input type="hidden" name="article_id" value="{{article.id}}">
+                        <div class="row">
+                            <div class="col-9">
+                                <input type="text" class="form-control" name="contents">
+                            </div>
+                            <div class="col-3 text-center">
+                                <input type="submit" class="btn btn-primary" value="댓글">
+                            </div>
+                        </div>
+                    </form>
                 </li>
-                <li class="list-group-item">댓글 2</li>
-                <li class="list-group-item">댓글 3</li>
+                {% for comment in article.comments %}
+                <li class="list-group-item">
+                    <i class="fas fa-comment-dots"></i>
+                    {{comment.contents}}
+                    <span class="float-right">
+                        <a href="{% url 'edit_comment' comment.id %}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'delete_comment' comment.id %}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                    </span>
+                </li>
+                {% endfor %}
             </ul>
         </div>
     </div>

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="card">
+        <form action="{% url 'articles' %}" method="POST">
+            <input type="hidden" name="csrfmiddlewaretoken" value={{csrf_token}}>
+            <div class="card text-center">
+                <!-- <div class="card-header">
+                  Featured
+                </div> -->
+                <div class="card-body">
+                    <textarea name="contents" class="form-control" rows="5"> </textarea>
+                </div>
+                <div class="card-footer text-right">
+                    <input type="submit" class="btn btn-success" value="작성하기">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="container">
+    {% for article in articles %}
+    <div class="row mt-4">
+        <div class="card col-12">
+            <img class="card-img-top" >
+            <div class="card-body" style="min-height: 8rem;">
+                <p class="card-text">{{article.contents}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                        <i class="fas fa-comment-dots"></i>
+                    댓글 1
+                    <a class="btn btn-warning">수정</a>
+                    <a class="btn btn-danger">삭제</a>
+                </li>
+                <li class="list-group-item">댓글 2</li>
+                <li class="list-group-item">댓글 3</li>
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

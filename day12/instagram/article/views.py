@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Article, Comment
+from .models import Article, Comment, ArticleImages
 
 # Create your views here.
 def index(request):
@@ -15,6 +15,8 @@ def index(request):
         # article.image_resized = request.FILES["image"]
     
         article.save()
+        for image in request.FILES.getlist("image"):
+            ArticleImages.objects.create(article_id=article.id, image=image)
         return redirect('articles')
     else:
         articles = Article.objects.all().order_by("created_at").reverse()

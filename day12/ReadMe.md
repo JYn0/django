@@ -26,7 +26,7 @@ python12
 {% endblock %}
 {% block content %}
 
-<!-- line 27 -->
+
 <img src="{% static '/article/images/car.png' %}" alt="car.png" class="card-img-top" >
 
 <form action="{% url 'articles' %}" method="POST" enctype="multipart/form-data">

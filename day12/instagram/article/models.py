@@ -39,6 +39,8 @@ class Article(models.Model):
     def comments(self):
         # article_id가 self.id인 것을 return해라
         return Comment.objects.filter(article_id=self.id)
+    def article_images(self):
+        return ArticleImages.objects.filter(article_id=self.id)
 
 
 class ArticleImages(models.Model):

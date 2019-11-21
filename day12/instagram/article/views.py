@@ -13,7 +13,7 @@ def index(request):
         article.image = request.FILES["image"] 
         # 원본 이미지를 프로세싱 한 이미지 저장
         article.image_resized = request.FILES["image"]
-       
+    
         article.save()
         return redirect('articles')
     else:

@@ -45,7 +45,9 @@
     {% for article in articles %}
     <div class="row mt-4">
         <div class="card col-12">
-            <img src="{{article.image.url}}" alt="car.png" class="card-img-top" >
+            {% if article.image_resized  %}
+            <img src="{{article.image_resized.url}}" alt="car.png" class="card-img-top" >
+            {% endif %}
             <div class="card-body" style="min-height: 8rem;">
                 <p class="card-text">{{article.contents}}</p>
                 

@@ -10,15 +10,8 @@ class Article(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     # 원본 이미지를 저장해두고
-    image = models.ImageField(blank="True")
-    image_thumbnail = ImageSpecField(
-        source='image',
-        processors=[Thumbnail(200.200)],
-        format='JPEG',
-        options={
-            'quality':90
-        }
-    )
+    #image = models.ImageField(blank="True")
+    
     # 수정된 이미지도 따로 저장해서 사용
     # image_resized = ProcessedImageField(
     #     # source = 'image', # 썸네일
@@ -32,9 +25,34 @@ class Article(models.Model):
     #     # ResizeToFit : 설정한 사이즈에 맞게 조정(여백)
     # )
 
+    # 이미지의 썸네일을 생성해줌
+    # media/CACHE에 원본 이미지의 썸네일을 자동저장
+    # image_thumbnail = ImageSpecField(
+    #     source='image',
+    #     processors=[Thumbnail(200.200)],
+    #     format='JPEG',
+    #     options={
+    #         'quality':90
+    #     }
+    # )
+
     def comments(self):
         # article_id가 self.id인 것을 return해라
         return Comment.objects.filter(article_id=self.id)
+
+
+class ArticleImages(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    image = models.ImageField(blank=True)
+    image_thumbnail = ImageSpecField(
+        source='image',
+        processors=[Thumbnail(300,300)],
+        format='JPEG',
+        options={
+            'quality':90
+        }
+    )
+
 
 # python manage.py makemigrations -> 틀을 만듦
 # python manage.py migrate -> 실제 테이블을 만들어줌

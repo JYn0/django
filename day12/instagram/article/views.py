@@ -10,9 +10,9 @@ def index(request):
         # 이미지는 무조건 POST로만 
         # input type의 name과 같아야함
         # 원본 이미지 저장
-        article.image = request.FILES["image"] 
+        # article.image = request.FILES["image"] 
         # 원본 이미지를 프로세싱 한 이미지 저장
-        article.image_resized = request.FILES["image"]
+        # article.image_resized = request.FILES["image"]
     
         article.save()
         return redirect('articles')

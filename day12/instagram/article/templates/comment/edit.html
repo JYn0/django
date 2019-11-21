@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="card">
+        <form action="{% url 'edit_comment' comment.id %}" method="POST">
+            <input type="hidden" name="csrfmiddlewaretoken" value={{csrf_token}}>
+            <div class="card text-center">
+                <div class="card-body">
+                    <textarea name="contents" class="form-control" rows="5">{{comment.contents}}</textarea>
+                </div>
+                <div class="card-footer text-right">
+                    <input type="submit" class="btn btn-success" value="수정">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

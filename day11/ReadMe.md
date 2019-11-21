@@ -11,8 +11,23 @@ python11
     > user는 게시글을 모름, 게시글을 user를 알고있음
     > user의 ID로 게시글을 검색하면 user가 어떤글을 썼는지 알수있음
 
+
+* 1:N
+  * 댓글관게
+  * 모델에 메소드 달기
+* 댓글 수정, 삭제
+* 게시글 수정, 삭제
+
+
+--------------------
+
+
 * 이미지 업로드, 좋아요
   * 좋아요, 해시태그: database relation(M:N)
+
+
+--------------------
+
 
 ```shell
 > django-admin startproject instagram

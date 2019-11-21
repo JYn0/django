@@ -90,5 +90,21 @@
 * [day12](/day12)
   * ReadMe.md
   * instagram/
-    * article/static/(app이름)/images/ (new)
+    * article/
+      * static/(app이름)/images/ (new, 마지막엔 사용X)
+      * templates/index.html
+      * models.py
+      * views.py
+    * instagram/
+      * settings.py
+      * urls.py
 
+
+
+--------
+
+```shell
+> 
+> pip install pylint
+> pip install django-pylint
+```

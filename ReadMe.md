@@ -65,6 +65,10 @@
   * crudtest/
     * articles/
 
+
+> **Instagram Project**
+> day11 day12 day13
+
 * [day11](/day11)
   * ReadMe.md
   * instagram/
@@ -83,5 +87,8 @@
       * settings.py
       * urls.py
 
-* 
-    
+* [day12](/day12)
+  * ReadMe.md
+  * instagram/
+    * article/static/(app이름)/images/ (new)
+

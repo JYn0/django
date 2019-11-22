@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .bg-red{
+            background-color: red;
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <h1 id="title">JS 수업</h1>
+    <h2 id="joke">JS 재미없음</h2>
+    <!-- <p>오늘은 금요일</p> -->
+    <!-- <div class="p-list"> -->
+        <p class="element">요소 1</p>
+        <div class="blue">요소 2</div>
+        <div class="blue">요소 3</div>
+        <p><span class="four">요소 4</span></p>
+        <!-- 
+            > document.querySelectorAll('.p-list span');
+            p-list안에있는 span
+            < NodeList [span.four]
+            
+            > document.querySelectorAll('.p-list, span');
+            < NodeList(2) [div.p-list, span.four]
+
+            > document.querySelectorAll('.p-list > .element');
+            < NodeList(3) [p.element, p.element, p.element]
+         -->
+        <p class="bg-red">요소 5</p>
+
+        <form class="mb-5 mt-5">
+            글쓰기
+            <input type="text" class="form-control" id="articleForm">
+            <button type="button" class="btn btn-primary">글쓰기</button>
+            <div class="pb-5"></div>
+            댓글쓰기
+            <input type="text" class="form-control" id="commentForm">
+            <button type="button" class="btn btn-primary" id="submitComment">댓글쓰기</button>
+        </form>
+
+        <div class="commentList">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    첫번째 댓글<button type="button" class="btn btn-warning">수정</button>
+                </li>
+                <li class="list-group-item">
+                    두번째 댓글<button type="button" class="btn btn-warning">수정</button>
+                </li>
+                <li class="list-group-item">
+                    세번째 댓글<button type="button" class="btn btn-warning">수정</button>
+                </li>
+                <li class="list-group-item">
+                    세번째 댓글<button type="button" class="btn btn-warning">수정</button>
+                </li>    
+            </ul>
+        </div>
+
+
+    <!-- </div> -->
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script>
+        console.dir($);
+        // click에 대한 listener
+        var btn = document.getElementById('submitComment');
+        // click하면 function 동작
+        btn.addEventListener('click', function(){
+            // commentForm에 있는 내용을 받아서
+            var commentForm = document.getElementById('commentForm');
+            if(commentForm.value == ''){
+                alert('빈칸은 입력할 수 없습니다.');
+                return;
+            }
+
+            // alert 혹은 console에 출력
+            // console.dir(commentForm);
+            console.log(commentForm.value);
+
+            
+            // 댓글을 추가할 위치를 찾아서 -> ul class="list-group"
+            var position = document.querySelector('.list-group');
+            console.dir(position);
+            // 추가 할 HTML 태그 모양을 잡고
+            var appendingTag = document.createElement('li.list-group-item');
+            var appendingSpan = document.createElement('span');
+
+            appendingTag.classList.add('list-group-item');
+            appendingSpan.classList.add('float-right');            
+
+            appendingTag.innerText = commentForm.value;
+            appendingSpan.innerHTML = '<button type="button" class="btn btn-warning">수정</button>';
+            appendingTag.appendChild(appendingSpan);
+            commentForm.value = '';
+
+            
+            
+            console.dir(appendingTag);
+            // `<li class="list-group-item">
+            //     JS로 추가된 댓글
+            //     <span class="float-right">
+            //         <button type="button" class="btn btn-warning">수정</button>
+            //     </span>
+            // </li>`
+            
+            
+            // 해당 위치에 추가
+            position.prepend(appendingTag);
+            // appendChild vs prepend
+
+
+        })
+
+
+
+        // console.log("Hello World!")
+        
+        // 요소 찾아서 이벤트를 주고
+        var joke = document.getElementById('joke');
+        // 어떤 동작을 할지
+        // joke.onclick = function(){
+        //     alert("fake");
+        // }
+
+        // event, 발생할 내용
+        // joke.addEventListener('click', function(){
+
+        // 요소.이벤트리스너달기('이벤트명', function(){ 
+        //function -> event handler })
+
+        //     alert('FAKE');
+        // })
+
+
+        // pTag 다 불러오기
+        var pList = document.getElementsByTagName('p');
+        // console.log(pList);
+        // HTMLCollection(5) [p.element, p.element, p.element, p, p]
+
+        // for(var i=0; i<pList.length; i++){
+        //     pList[i].addEventListener('click', function(){
+        //     alert("pTag Event");
+        //     })
+        // }
+        
+        // pList.forEach(function(element){
+        //     element.addEventListener('click', function(){
+        //         alert('이건 안됨');
+        //     })
+        // })
+
+        // var pList2 = document.querySelectorAll('p');
+        var pList2 = document.querySelectorAll('.blue');
+        // console.log(pList2);
+        // NodeList(5) [p.element, p.element, p.element, p, p]
+        
+        pList2.forEach(function(element){
+            element.addEventListener('click', function(){
+                // alert('이건 됨');
+
+                // 속성setAttribute('속성 명', '속성 값')
+                // element.setAttribute('class', 'p-tag')
+                // class="element" -> class="p-tag"
+
+                // if(confirm("이 태그를 삭제하시겠습니까?")){
+                //     // element.classList.add('bg-red');
+                //     // element.classList.remove('bg-red');
+                //     element.classList.toggle('bg-red');
+
+                //     // element.setAttribute('class', 'bg-red');
+                //     // element.setAttribute('style', 'display: none;');
+                //     // 새로고침하면 다시 보임
+                // }
+
+                // click -> blue
+                // console.dir(element);
+                // <p><span class="four">요소 4</span></p>
+                // innerHTML: "<span class="four">요소 4</span>"
+                // innerText: "요소 4"
+                // if(confirm("이 태그를 내용을 출력하시겠습니까?")){
+                //     // alert(element.innerText);
+                //     // alert(element.innerHTML);
+                //     element.classList.toggle('alert-primary')
+                // }
+
+            })
+        })
+
+        // 여러개를 선택할 때는 querySelectorAll 사용(getElement보다는)
+
+    </script>
+</body>
+</html>

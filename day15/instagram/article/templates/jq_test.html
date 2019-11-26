@@ -44,7 +44,7 @@
 
             // 수정 버튼을 눌렀을 때 실제 DB에서 수정
             // 수정 버튼을 찾아서 이벤트 등록
-            $('.editBoard').on('click', function(){
+            $(document).on('click', '.editBoard', function(){
                 // default event 삭제할 필요 없음
                 // console.log("hello hi") // event 등록 확인
                 
@@ -53,8 +53,8 @@
                 var contents = $('#board-' + id + ' .boardItem').text();
                 // 원래의 댓글 내용이 입력창에 넣기
                 $('#boardInput').val(contents); // contetns
-                $('#submitComment').attr('data-method', 'edit');
-                $('#submitComment').attr('data-id', id);
+                $('#submitComment').data('method', 'edit');
+                $('#submitComment').data('id', id);
             })
 
 
@@ -95,6 +95,8 @@
                 event.preventDefault(); // submit되어도 페이지가 넘어가지 않음
                 // console.log("hello");
                 var board = $('#boardInput').val();
+                $('#boardInput').val(' ');
+                // Update
                 if($('#submitComment').data('method') == 'edit'){
                     var id = $('#submitComment').data('id');
                     $.ajax({
@@ -107,12 +109,18 @@
                         },
                         success: function(data){
                             alert("수정 성공");
+                            // 댓글있는부분 찾기
+                            $('#board-' + id + ' .boardItem').text(board);
+                            // 내용 바꾸기
+                            // 확인버튼에 달려있는 속성(data-method)을 삭제해야함
+                            $('#submitComment').removeData('method');
                         },
                         error: function(data){
                             alert("수정 실패");
                         }
                     })
                 } else{
+                    // Create
                     // 실제 DB에 등록이 될 수 있게 ajax 요청 만들기
                     $.ajax({
                         url: '{% url "submit_boards" %}',

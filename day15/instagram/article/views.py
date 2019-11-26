@@ -33,6 +33,15 @@ def delete_boards(request):
         }
         # HttpResponse(보낼data, json타입 알려주기), html파일을 따로 만들 필요 없음
         return HttpResponse(json.dumps(context), content_type="application/json")
+    
+def edit_boards(request):
+    if request.method == "POST":
+        id = request.POST["board_id"]
+        contents = request.POST["contents"]
+        board = Board.objects.get(id=id)
+        board.contents = contents
+        board.save()
+        return HttpResponse('', status=204)
 
 def index(request):
     if request.method == "POST":

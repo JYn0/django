@@ -18,10 +18,12 @@
             {% for board in boards %}
             <li class="list-group-item" id="board-{{board.id}}">
                 <!-- 첫번째 댓글 -->
-                {{board.contents}}
+
+                <span class="boardItem">{{board.contents}}</span>
+
                 <span class="float-right">
                     <button type="button" class="btn btn-danger deleteBoard" data-id="{{board.id}}">삭제</button>
-                    <button type="button" class="btn btn-warning">수정</button>
+                    <button type="button" class="btn btn-warning editBoard" data-id="{{board.id}}">수정</button>
                 </span>
             </li>
             {% endfor %}
@@ -39,6 +41,26 @@
         // })
 
         $(function(){      
+
+            // 수정 버튼을 눌렀을 때 실제 DB에서 수정
+            // 수정 버튼을 찾아서 이벤트 등록
+            $('.editBoard').on('click', function(){
+                // default event 삭제할 필요 없음
+                // console.log("hello hi") // event 등록 확인
+                
+                // 원래의 댓글 내용 찾기
+                var id = $(this).data('id');
+                var contents = $('#board-' + id + ' .boardItem').text();
+                // 원래의 댓글 내용이 입력창에 넣기
+                $('#boardInput').val(contents); // contetns
+                $('#submitComment').attr('data-method', 'edit');
+                $('#submitComment').attr('data-id', id);
+            })
+
+
+
+
+
             // 삭제 버튼을 눌렀을 때 실제로 DB에서 삭제시키기
             $(document).on('click', '.deleteBoard', function(){
                 // 해당 줄(list)을 하나 삭제해야함
@@ -71,24 +93,44 @@
             // event명 : submit, e: event
             $('#boardForm').on('submit', function(e){
                 event.preventDefault(); // submit되어도 페이지가 넘어가지 않음
-                console.log("hello");
+                // console.log("hello");
                 var board = $('#boardInput').val();
-                // 실제 DB에 등록이 될 수 있게 ajax 요청 만들기
-                $.ajax({
-                    url: '{% url "submit_boards" %}',
-                    method: 'POST', // POST는 CSRF token 같이 보내줘야함
-                    data: {
-                        board: board,
-                        csrfmiddlewaretoken: '{{csrf_token}}'
-                    },
-                    success: function(data){
-                        alert("성공");
-                        $('.list-group').prepend(data);
-                    },
-                    error: function(data){
-                        alert("실패");
-                    }
-                })
+                if($('#submitComment').data('method') == 'edit'){
+                    var id = $('#submitComment').data('id');
+                    $.ajax({
+                        url: '{% url "edit_boards" %}',
+                        method: 'POST',
+                        data: {
+                            board_id: id,
+                            contents: board,
+                            csrfmiddlewaretoken: '{{csrf_token}}'
+                        },
+                        success: function(data){
+                            alert("수정 성공");
+                        },
+                        error: function(data){
+                            alert("수정 실패");
+                        }
+                    })
+                } else{
+                    // 실제 DB에 등록이 될 수 있게 ajax 요청 만들기
+                    $.ajax({
+                        url: '{% url "submit_boards" %}',
+                        method: 'POST', // POST는 CSRF token 같이 보내줘야함
+                        data: {
+                            board: board,
+                            csrfmiddlewaretoken: '{{csrf_token}}'
+                        },
+                        success: function(data){
+                            alert("성공");
+                            $('.list-group').prepend(data);
+                        },
+                        error: function(data){
+                            alert("실패");
+                        }
+                    })
+                }
+                
             }) 
 
 

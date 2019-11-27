@@ -110,6 +110,8 @@
 
 * [day15](/day15)
   * ReadMe.md
+
+  (JS + jQuery + AJAX)
   * instagram/article/
     * models.py
     * urls.py
@@ -120,6 +122,22 @@
       
       * base.html
       * index.html
+
+  (Auth(User))
+  * instagram/accounts/
+    * views.py
+    * urls.py
+    * templates/
+      * login.html
+      * signup.html
+  * instagram/article/
+    * templates/
+      * base.html
+  * instagram/instagram/
+    * settings.py
+    * urls.py
+
+
     
 
 

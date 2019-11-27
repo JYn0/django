@@ -49,3 +49,22 @@ python15
       
 
 ### Auth(User)
+
+```shell
+> python manage.py createsuperuser
+```
+
+localhost:8000/admin
+이미 login, logout,signup 모델링이 되어있음
+/accounts/login
+/accounts/logout
+/accounts/signup
+
+```shell
+> python manage.py startapp accounts
+```
+
+> HTTP req/res -> 무상태성 : 한번 주고 난 이후에는 모르는 사이, 너가 로그인 했는지 안했는지 모른다.
+> 정보저장 주체의 차이 / 라이프사이클 (cookie vs session)
+>   * cookie : 내 브라우저, 정보의 위치, 종료되어도 유지
+>   * session : 서버 컴퓨터, 끄면 날아감

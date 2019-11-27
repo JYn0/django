@@ -87,19 +87,34 @@ def comments(request):
     if request.method == "POST":
         contents = request.POST['contents']
         article_id = request.POST['article_id']
-        
-        comment = Comment()
+
+        if request.POST["form_method"] == "create":
+            comment = Comment()
+        elif request.POST["form_method"] == "edit":
+            comment_id = request.POST["comment_id"]
+            comment = Comment.objects.get(id=comment_id)
+
         comment.contents = contents
         comment.article_id = article_id
         comment.save()
-        return redirect('articles')
+        context = {
+            'method': request.POST["form_method"],
+            'comment': comment.contents,
+            'comment_id': comment.id,
+            'article_id': comment.article_id
+        }
+        return HttpResponse(json.dumps(context), content_type='application/json')
+        # return redirect('articles',)
         
-def delete_comment(request, comment_id):
-    comment = Comment.objects.get(id=comment_id)
-    comment.delete()
+def delete_comment(request):
+    if request.method == "POST":
+        comment_id = request.POST["comment_id"]
+        comment = Comment.objects.get(id=comment_id)
+        comment.delete()
 
-    # 삭제하고 페이지가 필요 없음
-    return redirect('articles')
+        # 삭제하고 페이지가 필요 없음
+        # return redirect('articles')
+        return HttpResponse('',status=204)
 
 def edit_comment(request, comment_id):
     comment = Comment.objects.get(id=comment_id)

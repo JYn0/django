@@ -54,9 +54,8 @@ python02
   def index():
       return { 'method': 'Hello'}
   
-# -----------------------------------------------------
   
-from flask import Flask, escape, request
+  from flask import Flask, escape, request
   import json
   import requests
   

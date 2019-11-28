@@ -137,6 +137,19 @@
     * settings.py
     * urls.py
 
+* [day17](/day17)
+  * ReadMe.md
+  * instagram/article/
+    * views.py
+    * models.py
+    * templates/
+      * index.html
+  * instagram/accounts/
+    * templates/
+      * login.html
+      * signup.html
+
+
 
     
 
@@ -146,5 +159,6 @@
 ```shell
 > pip install flask
 > pip install pylint
+> pip install django
 > pip install django-pylint
 ```

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <form class="mb-5 mt-5" id="boardForm">
+        댓글쓰기
+        <input type="text" class="form-control" id="boardInput">
+        <button type="submit" class="btn btn-primary" id="submitComment">확인</button>
+    </form>
+    <div class="commentList">
+        <ul class="list-group">
+            {% for board in boards %}
+            <li class="list-group-item" id="board-{{board.id}}">
+                <!-- 첫번째 댓글 -->
+
+                <span class="boardItem">{{board.contents}}</span>
+
+                <span class="float-right">
+                    <button type="button" class="btn btn-danger deleteBoard" data-id="{{board.id}}">삭제</button>
+                    <button type="button" class="btn btn-warning editBoard" data-id="{{board.id}}">수정</button>
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- jQuery CDN minified -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script>
+        // $(document).ready(function(){
+        //     // jquery
+        // })
+
+        $(function(){      
+
+            // 수정 버튼을 눌렀을 때 실제 DB에서 수정
+            // 수정 버튼을 찾아서 이벤트 등록
+            $(document).on('click', '.editBoard', function(){
+                // default event 삭제할 필요 없음
+                // console.log("hello hi") // event 등록 확인
+                
+                // 원래의 댓글 내용 찾기
+                var id = $(this).data('id');
+                var contents = $('#board-' + id + ' .boardItem').text();
+                // 원래의 댓글 내용이 입력창에 넣기
+                $('#boardInput').val(contents); // contetns
+                $('#submitComment').data('method', 'edit');
+                $('#submitComment').data('id', id);
+            })
+
+
+
+
+
+            // 삭제 버튼을 눌렀을 때 실제로 DB에서 삭제시키기
+            $(document).on('click', '.deleteBoard', function(){
+                // 해당 줄(list)을 하나 삭제해야함
+                var id = $(this).data('id');
+                // console.log(id);
+                $.ajax({
+                    url: '{% url "delete_boards" %}',
+                    method: 'POST',
+                    data: {
+                        board_id: id,
+                        csrfmiddlewaretoken: '{{csrf_token}}'
+                    },
+                    success: function(data){
+                        alert("삭제성공");
+                        $('#board-' + data.board_id).hide(); // display none
+                    },
+                    error: function(data){
+                        alert("삭제실패");
+                    }
+                })
+                
+            })
+
+
+
+
+            // 댓글 쓰고 실제로 DB에 등록하기
+            // event -> form이 제출이 되었는지(form에 id주기:boardForm)
+            // boardForm이 제출 되었을때 
+            // event명 : submit, e: event
+            $('#boardForm').on('submit', function(e){
+                event.preventDefault(); // submit되어도 페이지가 넘어가지 않음
+                // console.log("hello");
+                var board = $('#boardInput').val();
+                $('#boardInput').val(' ');
+                // Update
+                if($('#submitComment').data('method') == 'edit'){
+                    var id = $('#submitComment').data('id');
+                    $.ajax({
+                        url: '{% url "edit_boards" %}',
+                        method: 'POST',
+                        data: {
+                            board_id: id,
+                            contents: board,
+                            csrfmiddlewaretoken: '{{csrf_token}}'
+                        },
+                        success: function(data){
+                            alert("수정 성공");
+                            // 댓글있는부분 찾기
+                            $('#board-' + id + ' .boardItem').text(board);
+                            // 내용 바꾸기
+                            // 확인버튼에 달려있는 속성(data-method)을 삭제해야함
+                            $('#submitComment').removeData('method');
+                        },
+                        error: function(data){
+                            alert("수정 실패");
+                        }
+                    })
+                } else{
+                    // Create
+                    // 실제 DB에 등록이 될 수 있게 ajax 요청 만들기
+                    $.ajax({
+                        url: '{% url "submit_boards" %}',
+                        method: 'POST', // POST는 CSRF token 같이 보내줘야함
+                        data: {
+                            board: board,
+                            csrfmiddlewaretoken: '{{csrf_token}}'
+                        },
+                        success: function(data){
+                            alert("성공");
+                            $('.list-group').prepend(data);
+                        },
+                        error: function(data){
+                            alert("실패");
+                        }
+                    })
+                }
+                
+            }) 
+
+
+
+            // 댓글달기
+            // 댓글쓰기 버튼이 눌렸을때
+            // submitComment 찾기
+            // $('#submitComment').on('click', function(){
+            //     var input = $('#commentForm').val(); // 입력된 값 가져오기
+            //     if(input == ''){
+            //         alert("댓글을 입력해주세요");
+            //         return;
+            //     }
+            //     var position = $('ul.list-group'); // 찾기
+                
+            //     // li.list-group-item 요소를 만들어서
+            //     // input이 ${여기로} 들어옴
+            //     $('#commentForm').val(''); // 빈 공백으로 채우기
+            //     var element = 
+            //     `<li class="list-group-item" id="comment-1">
+            //         ${input}
+            //         <span class="float-right">
+            //             <button type="button" class="btn btn-danger delete-comment" value="1">삭제</button>
+            //             <button type="button" class="btn btn-warning">수정</button>
+            //         </span>
+            //     </li>`
+            //     position.prepend(element);
+
+            //     // ul.list-group에 붙여줌
+
+            // })
+
+            
+
+            // 이벤트가 발생할 요소를 찾고
+            // $('.delete-comment').on('click', '.delete-comment', function(){
+            //     alert("댓글 삭제");
+            
+                // 이벤트가 발생했을 경우 실행할 이벤트 핸들러를 만든다
+                // console.dir($(this));
+            //     var commentId = $(this).attr('value');
+
+                // 1. commentId로 삭제할 요소를 찾아서 지워줌
+                // $('#comment-' + commentId).hide();
+                // hide : html코드는 남아있지만 display none
+                // remove : 코드를 지워줌
+
+                // 2. 이벤트가 발생한 친구로부터 부모를 찾아 지워주기
+            //    console.dir($(this).parents('.list-group-item').remove())
+                // parent() / parents() / siblings()
+
+                // console.log(commentId);
+
+                // console.dir(this.attr('value')); <- jquery 메소드 사용 불가
+                // console.dir(this);
+                // 현재 버튼을 누른 댓글이 삭제되어야함
+            // })
+
+        })
+    </script>
+</body>
+</html>

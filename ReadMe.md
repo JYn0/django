@@ -144,7 +144,7 @@
 --------
 
 ```shell
-> 
+> pip install flask
 > pip install pylint
 > pip install django-pylint
 ```

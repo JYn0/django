@@ -20,7 +20,7 @@
             <div class="card text-center">
                 <div class="card-body">
                     <textarea name="contents" class="form-control" rows="5"> </textarea>
-                    
+                    <input placeholder="Insert HashTag" type="text" class="form-control mt-3" name="hashtag">
                     <!-- img input tag -->
                     <div class="input-group mt-2">
                         <div class="input-group-prepend">
@@ -88,16 +88,25 @@
             {% endif %}
             <div class="card-body" style="min-height: 8rem;">
                 <p class="card-text">{{article.contents}}</p>
-                
+                {% for tag in article.tags.all %}
+                <span>#{{tag.tag}}</span>
+                {% endfor %}
+
+
                 <div class="text-center">
                     <div class="row float-right">
                         <span class="muted">created by {{article.user.username}}</span>
                     </div>
                     
+                    {% if user in article.user_likes.all %}
+                        <button type="button" class="btn btn-success likes" data-article-id='{{article.id}}'><i class="fas fa-thumbs-up"></i>{{len(article.user_likes.all)}}</button>
+                    {% else %}
+                        <button type="button" class="btn btn-secondary likes" data-article-id='{{article.id}}'><i class="fas fa-thumbs-up"></i></button>
+                    {% endif %}
                     {% if article.user_id == user.id %}
                         <!-- login -->
-                        <a href="{% url 'edit' article.id %}" class="btn btn-warning text-white deleteComment"><i class="fas fa-edit"></i></a>
-                        <a href="{% url 'edit' article.id %}" class="btn btn-danger textwhite editComment"><i class="fas fa-trash-alt"></i></a>
+                        <a href="{% url 'edit' article.id %}" class="btn btn-warning text-white editComment"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'delete' article.id %}" class="btn btn-danger textwhite deleteComment"><i class="fas fa-trash-alt"></i></a>
                     {% endif %}
                 </div>
             
@@ -105,7 +114,7 @@
             <ul class="list-group list-group-flush" id="comment-list-group-{{article.id}}">
                 <li class="list-group-item">
 
-                    <form action="{% url 'comments' %}" method="POST" class="commentForm" id="commentForm-{{article.id}}">
+                    <form method="POST" class="commentForm" id="commentForm-{{article.id}}">
                         <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
                         <input type="hidden" class="articleId" name="article_id" value="{{article.id}}">
                         <input type="hidden" class="formMethod" name="form_method" value="create">
@@ -145,6 +154,28 @@
 
 <script>
     $(function(){
+        $('.likes').on('click', function(){
+            // console.log("졸려");
+            var article_id = $(this).data('article-id')
+            var button = $(this);
+            $.ajax({
+                url: '{% url "likes" %}',
+                method: 'POST',
+                data: {
+                    article_id: article_id,
+                    csrfmiddlewaretoken: '{{csrf_token}}'
+                },
+                success: function(data){
+                    console.log("성공");
+                    console.log(data);
+                    button.toggleClass(['btn-secondary', 'btn-success']);
+                },
+                error: function(data){
+                    if(data.status == 403) location.href = "{% url 'accounts:login' %}";
+                    console.log("실패");
+                }
+            })
+        })
         // alert('Hi');
     
         // create comment
@@ -208,7 +239,7 @@
                     // 실패한 이유가 로그아웃 상태라면
                     if(data.status == 401)
                         // 로그인 페이지로 redirect
-                        location.href = '{% url "accounts:login" %}'
+                        location.href = '{% url "accounts:login" %}';
                 }
             })
 

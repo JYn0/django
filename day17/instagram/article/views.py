@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http.response import HttpResponse
-from .models import Article, Comment, ArticleImages, Board
+from .models import Article, Comment, ArticleImages, Board, HashTag
 import json
 
 # Create your views here.
@@ -48,7 +48,18 @@ def index(request):
         if request.user.is_authenticated:
             article = Article()
             article.contents = request.POST['contents']
-            article.user_id = request.user.id   
+            article.user_id = request.user.id  
+            article.save() 
+
+            tags = request.POST["hashtag"]
+            for tag in tags.split(","):
+                tag = tag.strip() # 앞,뒤의 공백 삭제
+                if not HashTag.objects.filter(tag=tag):
+                    tag = HashTag.objects.create(tag=tag)
+                else:
+                    tag = HashTag.objects.filter(tag=tag)[0]
+                article.tags.add(tag)
+
 
             # 이미지는 무조건 POST로만 
             # input type의 name과 같아야함
@@ -104,7 +115,12 @@ def comments(request):
             elif request.POST["form_method"] == "edit":
                 comment_id = request.POST["comment_id"]
                 comment = Comment.objects.get(id=comment_id)
+                if comment.user_id != request.user.id:
+                    return HttpResponse('', status=401)
 
+            # if comment.user_id != request.user.id:
+            #     return HttpResponse('', status=401)
+            # else: 
             comment.contents = contents
             comment.article_id = article_id
             comment.user_id = request.user.id
@@ -143,8 +159,25 @@ def edit_comment(request, comment_id):
         comment.contents = request.POST["contents"]
         comment.save()
         return redirect('articles')
-    else : 
+    else: 
         context = {
             'comment': comment
         }
         return render(request, 'comment/edit.html', context)
+
+def likes(request):
+    if request.method == "POST" and request.user.is_authenticated:
+        article_id = request.POST["article_id"]
+        article = Article.objects.get(id=article_id)
+        if request.user in article.user_likes.all():
+            article.user_likes.remove(request.user) # 좋아요 취소
+        else:
+            article.user_likes.add(request.user) # 좋아요
+            
+        likes_count = len(article.user_likes.all())
+        context = {
+            'count': likes_count
+        }
+        return HttpResponse(json.dumps(context), content_type="application/json")
+    else: 
+        return HttpResponse('', status=403)

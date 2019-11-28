@@ -11,6 +11,8 @@ class Article(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    user_likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="article_likes")
     
     # 원본 이미지를 저장해두고
     #image = models.ImageField(blank="True")
@@ -71,6 +73,10 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+class HashTag(models.Model):
+    tag = models.CharField(max_length=16, unique=True)
+    articles = models.ManyToManyField(Article, related_name="tags")
 
 
 class Board(models.Model):

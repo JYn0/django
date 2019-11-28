@@ -7,4 +7,5 @@ python17
 로그인이 되지 않은 상태에서 글을 작성할수 없음(Login 반드시 필요한 기능)
 * 글작성, 댓글장석, 좋아요(M:N)
 
-### Pusher(실시간 기능) - 외부 API
+
+like and hashtag

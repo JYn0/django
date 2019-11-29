@@ -149,6 +149,28 @@
       * login.html
       * signup.html
 
+* [day18](/day18)
+  * ReadMe.md
+  * chatproject/
+    * settings.py
+    * urls.py
+  * boards/
+    * views.py
+    * urls.py
+    * models.py
+    * templates/
+      * index.html
+      * show.html
+      * base.html
+    * accounts/
+      * views.py
+      * urls.py
+      * models.py
+      * templates/
+        * login.html
+        * signup.html
+
+
 
 
     

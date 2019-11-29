@@ -8,4 +8,10 @@ python17
 * 글작성, 댓글장석, 좋아요(M:N)
 
 
-like and hashtag
+* 회원가입 
+  -> 유저에게 접근할 수 있는 범위 지정
+
+* M:N Field
+  join table 만들 필요 없어짐
+  * 어느 쪽에 관계를 다느냐에 따라 이름과 related_name을 명확하게 줄 수 있어야함
+

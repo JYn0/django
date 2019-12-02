@@ -187,9 +187,16 @@ SQLITE EXPLORER play버튼 누르면 데이터에 들어간 내용 볼 수 있�
 ```
 
 
+```python
+# views.py
+from django.shortcuts import get_object_or_404
+def article_detail(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+
+```
 
 
-
+`pip freeze > requirements.txt`하고 끝내기
 
 
 

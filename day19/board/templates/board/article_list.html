@@ -1,0 +1,13 @@
+{% include 'board/base.html' %}
+
+{% block content %}
+
+<h1>Article list</h1>
+<ul>
+{% for article in articles %}
+    <li>{{ article.title }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}
+

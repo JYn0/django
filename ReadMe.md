@@ -170,6 +170,41 @@
         * login.html
         * signup.html
 
+* [day19](/day19)
+  * ReadMe.md
+  * .gitignore
+  * requirements.txt
+  * django_advance
+    * settings.py
+    * urls.py
+  * board/
+    * models.py
+    * urls.py
+    * views.py
+    * templates/
+      * base.html
+      * article_list.html
+      * article_detail.html
+
+* Form
+  * ReadMe.md
+  * requirements.txt
+  * board/
+    * forms.py
+    * models.py
+    * urls.py
+    * views.py
+    * templates/
+      * board/
+        * base.html
+        * article_list.html
+        * article_detail.html
+        * article_form.html
+        * new_article.html
+  * templates/
+    * base.html
+  
+  
 
 
 

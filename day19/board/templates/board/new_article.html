@@ -7,6 +7,8 @@
 <h1>New Artcle</h1>
 <form action="{% url 'board:new_article' %}" method="POST">
     {% csrf_token %}
+    
+    {% comment %} {{ form.as_p }} {% endcomment %}
     {% bootstrap_form form %}
     <input type="submit">
 </form>

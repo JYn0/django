@@ -47,7 +47,7 @@ $ pip freeze > requirements.txt
 
 $ python -m venv venv
 F1 -> >select interpreter -> .\venv\... 
-$ tocch .gitignore
+$ touch .gitignore
 $ pip install django # + other packages
 $ pip freeze > requirements.txt
 ```
@@ -198,7 +198,18 @@ def article_detail(request, article_id):
 
 `pip freeze > requirements.txt`하고 끝내기
 
+---------------
 
+# 12.03
+> pip install django-bootstrap4
+
+```python
+# settings.py
+
+INSTALLED_APPS = [
+    'bootstrap4'
+]
+```
 
 
 -----------------------

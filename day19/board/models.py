@@ -8,6 +8,9 @@ class Article(models.Model):
     keyword = models.CharField(max_length=50)
     email = models.CharField(max_length=200)
     content = models.TextField()
+    date = models.DateField(blank=True, null=True)
+    # blank=True -> is_valid() 통과
+    # null=True -> False(default), DB에서 insert 하는 순간 not null(제약조건)에서 길림
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

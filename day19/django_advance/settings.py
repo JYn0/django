@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
     'bootstrap4',
     'django_extensions',
     'django.contrib.admin',
@@ -116,6 +117,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+# AUTH_USER_MODEL = 'auth.User'
+AUTH_USER_MODEL = 'accounts.User'
+# 내가 만든 유저model을 사용하겠다
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

@@ -212,6 +212,101 @@ INSTALLED_APPS = [
 ```
 
 
+---------------
+
+# 12.04
+
+### accounts
+
+```shell
+> python manage.py createsuperuser
+
+```
+
+`settings.py`에  `AUTH_USER_MODEL = 'accounts.User'`
+-> 기본 user모델이 아닌 내가 만든 user모델을 사용하겠다
+
+
+
+`accounts/views.py`
+```python
+from .forms import CustomAuthenticationForm, CustomUserCreationForm
+# -> 내가 만든 user 모델
+
+def signup(request):
+    if 요청을 보낸 사용자가 인증되어있지 않으면:
+        if method가 POST이면:
+            if 유효성 검사를 통과한다면:
+                user db에 저장하고
+                저장 정보로 login해주고
+                return 게시판 목록으로 이동
+        else:
+            GET이면
+            그냥 signup페이지 접속해오면
+            context 정보 담아서
+            return signup페이지로 이동
+    else:
+        인증되어있다면
+        return 게시판 목록으로 이동
+
+def login(request):
+    if 요청을 보낸 사용자가 인증되어있으면(로그인상태):
+        return 게시판 목록으로 이동
+    else:
+        로그아웃 상태
+        if POST 방식이면:
+            로그인할때 보낸것들을 form에 담아두기
+            if form이 유효해서:
+                인증이 되었으면
+                누구 정보인지 가져와서
+                로그인을 해주고
+                return 로그인페이지 오기 전 이나, 목록으로 이동
+        else :
+            GET방식이면(로그인하러 들어온 페이지)
+            기본틀을 context에 담아서
+            login페이지로 넘겨주면
+            return 틀대로 로그인페이지가 꾸려진다.
+
+def logout(request):
+    로그아웃하고
+    return 게시판 목록으로 이동
+
+```
+
+`board/views.py`
+```python
+from django.contrib.auth.decorators import login_required
+# login_required가 있으면 로그인이 요구됨
+
+@login_required
+# 로그인이 되어있어야 새 게시글을 작성할 수 있음
+def new_article(request):
+
+```
+
+`accounts/forms.py`
+```python
+class CustomUserCreationForm(UserCreationForm):
+    address = forms.CharField(min_length=3)
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = UserCreationForm.Meta.fields + ('address', ) # 원래 있던 field에 address도 추가
+
+class CustomAuthenticationForm(AuthenticationForm):
+    class Meta(AuthenticationForm):
+        model = User
+
+```
+`accounts/models.py`
+```python
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+
+class User(AbstractUser):
+    # 여러 정보 담기
+    address = models.CharField(max_length=200)
+```
+
 -----------------------
 
 

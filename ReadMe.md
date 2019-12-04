@@ -204,7 +204,24 @@
   * templates/
     * base.html
   
-  
+* Accounts
+  * ReadMe.md
+  * accounts/
+    * views.py
+    * urls.py
+    * models.py
+    * forms.py
+    * templates/
+      * accounts/
+        * login.html
+        * signup.html
+  * board/
+    * views.py
+  * django_advance
+    * settings.py
+    * urls.py
+
+
 
 
 

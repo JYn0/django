@@ -307,8 +307,26 @@ class User(AbstractUser):
     address = models.CharField(max_length=200)
 ```
 
------------------------
+---------------
 
+# 12.05
+
+### comment + like + follow
+
+* board/views.py
+* article_detail.html
+
+
+GET -> R
+
+POST -> CUD, DB에 영향이 갈 때
+
+
+```shell
+> python manage.py shell_plus --print-sql
+```
+
+---------------
 
 ```shell
 # master 안 떠있을 경우

@@ -1,8 +1,18 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login, logout as auth_logout
 # from django.contrib.auth import logout as auth_logout
 # from .forms import AuthenticationForm, UserCreationForm
 from .forms import CustomAuthenticationForm, CustomUserCreationForm
+
+def follow(request, user_id):
+    fan = request.user # fan : 요청보낸사람
+    star = get_object_or_404(id=user_id)
+    if fan.stars.filter(id=star.id).exists():
+    # fan 입장에서 좋아하는 사람 중에 star.id가 있는지
+        fan.stars.remove(star) # unfollow
+    else:
+        fan.stars.add(star) # follow
+    return redirect('accounts:user_detail', star.id)
 
 # url
 def signup(request):

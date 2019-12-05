@@ -221,11 +221,21 @@
     * settings.py
     * urls.py
 
+* Comment + Like
+  * ReadMe.md
+  * board/
+    * views.py
+    * forms.py
+    * urls.py
+    * models.py
+    * templates/
+      * article_detail.html
+      * article_list.html
+  * accounts/
+    * views.py
+    * models.py
 
 
-
-
-    
 
 
 --------

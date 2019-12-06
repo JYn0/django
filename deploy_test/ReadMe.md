@@ -98,7 +98,6 @@ $ pip freeze > requirements
 
 ```txt
 python-3.7.4
-(3.7.5)
 ```
 
 ```shell
